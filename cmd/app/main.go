@@ -6,13 +6,20 @@ import (
 	"os"
 
 	"github.com/go-starter/internal/db"
+	_ "github.com/go-starter/internal/docs"
 	"github.com/go-starter/internal/router"
 	"github.com/go-starter/internal/service"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
+// @title Swagger Example API
+// @version 1.0
+// @description This is a sample server for using Swagger with Echo.
+// @host localhost:3000
+// @BasePath /
 func main() {
 	err := godotenv.Load(".env")
 	if err != nil {
@@ -20,7 +27,6 @@ func main() {
 	}
 	dsn := os.Getenv("DB_DSN")
 	if dsn == "" {
-		// default for local non-docker runs
 		dsn = "example.sqlite"
 	}
 	// init connection
@@ -49,5 +55,6 @@ func main() {
 		port = ":3000"
 	}
 
+	e.GET("/docs/*", echoSwagger.WrapHandler)
 	e.Logger.Fatal(e.Start(port))
 }

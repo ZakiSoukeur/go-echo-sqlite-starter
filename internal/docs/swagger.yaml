@@ -1,0 +1,140 @@
+basePath: /
+definitions:
+  db.Author:
+    properties:
+      id:
+        format: int64
+        type: integer
+      name:
+        type: string
+    type: object
+  handler.Author:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  handler.ErrorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  model.HomeData:
+    properties:
+      authors:
+        items:
+          $ref: '#/definitions/db.Author'
+        type: array
+      pageDescription:
+        type: string
+      pageTitle:
+        type: string
+    type: object
+host: localhost:3000
+info:
+  contact: {}
+  description: This is a sample server for using Swagger with Echo.
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /:
+    get:
+      description: Returns page metadata and all authors
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.HomeData'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Get home data
+      tags:
+      - authors
+    post:
+      consumes:
+      - application/json
+      description: Create a new author
+      parameters:
+      - description: Author payload
+        in: body
+        name: author
+        required: true
+        schema:
+          $ref: '#/definitions/handler.Author'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/handler.Author'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Create author
+      tags:
+      - authors
+  /{id}:
+    delete:
+      description: Deletes a single author by ID
+      parameters:
+      - description: Author ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: deleted
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Delete author by ID
+      tags:
+      - authors
+    get:
+      description: Returns a single author by ID
+      parameters:
+      - description: Author ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Author'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Get author by ID
+      tags:
+      - authors
+swagger: "2.0"
