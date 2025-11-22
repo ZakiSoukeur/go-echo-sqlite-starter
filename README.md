@@ -13,6 +13,7 @@ A minimal and clean starter template for building Go web applications using:
 
 ## 📦 Project Structure
 
+```shell
 .
 ├── cmd/app/main.go         # Application entrypoint
 ├── internal/
@@ -28,6 +29,7 @@ A minimal and clean starter template for building Go web applications using:
 ├── go.mod
 └── README.md
 
+```
 
 ---
 
