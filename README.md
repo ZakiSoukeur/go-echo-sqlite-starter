@@ -8,6 +8,7 @@ A minimal and clean starter template for building Go web applications using:
 - **Goose** – database migrations
 - **Dependency-injection friendly architecture**
 - **Unit tests**
+- **SWAGGER UI**
 
 ---
 
