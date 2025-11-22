@@ -7,7 +7,6 @@ A minimal and clean starter template for building Go web applications using:
 - **SQLC** – type-safe queries from SQL
 - **Goose** – database migrations
 - **Dependency-injection friendly architecture**
-- **Real & in-memory services**
 - **Unit tests**
 
 ---
@@ -15,16 +14,17 @@ A minimal and clean starter template for building Go web applications using:
 ## 📦 Project Structure
 
 .
-├── cmd/app/main.go # Application entrypoint
+├── cmd/app/main.go         # Application entrypoint
 ├── internal/
-│ ├── db/ # DB init + SQLC generated code
-│ ├── service/ # AuthorService + MemoryAuthorService
-│ ├── handler/ # Echo HTTP handlers
-│ ├── router/ # Route registration
-│ └── model/ # View/data models
-├── scripts/migrations/ # Goose migration files
-├── web/ # Static assets
-├── Makefile # Dev helpers
+│   ├── db/                 # DB init + SQLC generated code
+│   ├── service/            # AuthorService + MemoryAuthorService
+│   ├── handler/            # Echo HTTP handlers
+│   ├── router/             # Route registration
+│   └── model/              # View/data models
+├── scripts/migrations/     # Goose SQL migration files
+├── web/                    # Front-end static assets
+├── example.sqlite          # SQLite database (auto-created)
+├── Makefile
 ├── go.mod
 └── README.md
 
@@ -32,12 +32,12 @@ A minimal and clean starter template for building Go web applications using:
 ---
 
 ## 🧱 Architecture
-
 Handler (Echo)
-↓
+     ↓
 Service (business logic)
-↓
-DB Layer (SQLC)
+     ↓
+Database (SQLC + SQLite)
+
 
 
 ### Handlers
@@ -46,9 +46,6 @@ DB Layer (SQLC)
 
 ### Services
 - Business logic
-- Two implementations:
-  - `authorService` (SQLite + SQLC)
-  - `MemoryAuthorService` (in-memory for testing)
 
 ### DB
 - SQLite
@@ -60,31 +57,36 @@ DB Layer (SQLC)
 ## 🗄️ Database
 
 ### Apply migrations
-
+```shell
 make up
-
+```
 
 ### Roll back
-
+```shell
 make down
+```
 
 
 ### Status
-
+```shell
 make status
-
+```
 
 ### Generate SQLC code
 
+```shell
 sqlc generate
 
+```
 
 ---
 
 ## ▶️ Run the App
 
+```shell
 make run
 
+```
 
 Server starts on:
 
@@ -99,12 +101,13 @@ Includes:
 
 - Handler tests with Echo + httptest
 - Real DB tests using a test-specific DSN
-- Optional in-memory service (`MemoryAuthorService`)
 
 Run tests:
 
+```shell
 go test ./...
 
+```
 
 ---
 
@@ -112,18 +115,24 @@ go test ./...
 
 ### Tailwind (optional)
 
+```shell
 make styles
 
+```
 
 ### Auto-reload with wgo
 
+```shell
 make r
 
+```
 
 ### Pre-commit
 
+```shell
 make pre-commit
 
+```
 
 ---
 
