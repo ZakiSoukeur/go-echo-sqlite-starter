@@ -1,4 +1,7 @@
-export PORT=:3000
+IMAGE_NAME       ?= go-s
+CONTAINER_NAME   ?= go-s-dev
+export PORT := :3000
+
 
 styles:
 	npx @tailwindcss/cli -i ./web/static/css/input.css -o ./web/static/css/output.css --watch
@@ -21,3 +24,15 @@ up:
 
 down:
 	goose -dir "./scripts/migrations" sqlite3 ./example.sqlite down
+
+# Docker
+docker-build:
+	docker build -t $(IMAGE_NAME) .
+docker-run:
+	docker run --rm \
+		-p 3000:3000 \
+		-e PORT=$(PORT) \
+		-e DB_DSN=/app/example.sqlite \
+		-v $(PWD)/example.sqlite:/app/example.sqlite \
+		--name $(CONTAINER_NAME) \
+		$(IMAGE_NAME)

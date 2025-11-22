@@ -1,28 +1,39 @@
+version: "2"
 run:
   concurrency: 2
-  timeout: 5m
-  go: "1.25.4"
-
+  go: 1.25.4
 linters:
-  disable:
-    - containedctx
-    - contextcheck
-    - paralleltest
   enable:
-    - gofmt
     - goconst
-    - goimports
     - gosec
-    - gosimple
-    - govet
-    - ineffassign
     - misspell
     - nakedret
     - prealloc
     - staticcheck
-    - stylecheck
-    - typecheck
     - unconvert
-    - unused
     - unparam
-    - misspell
+  disable:
+    - containedctx
+    - contextcheck
+    - paralleltest
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - gofmt
+    - goimports
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$

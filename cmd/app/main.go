@@ -18,9 +18,13 @@ func main() {
 	if err != nil {
 		log.Printf("no .env file")
 	}
-
+	dsn := os.Getenv("DB_DSN")
+	if dsn == "" {
+		// default for local non-docker runs
+		dsn = "example.sqlite"
+	}
 	// init connection
-	err = db.InitDB("example.sqlite")
+	err = db.InitDB(dsn)
 	if err != nil {
 		fmt.Println(err)
 		panic(err)
